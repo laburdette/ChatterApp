@@ -1,0 +1,20 @@
+﻿@using Chatter.Models
+@model RegisterViewModel
+@{
+    ViewBag.Title = "Register with Chatter";
+}
+
+<h2>Get started with your Google Account: </h2>
+<div class="row">
+
+    <div class="col-md-4">
+        <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>
+    </div>
+   
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
