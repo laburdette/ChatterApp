@@ -5,26 +5,21 @@
 }
 
 
-<p>
+<!-- <p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>  -->
 
 <div>
     What do you want to chatter about?<br>
-    <input type="text" id="userInput" name="userInput" />
-
-
+    <input type="text" id="userInput" name="userInput" /> <!--input box-->
     <br><br>
+    <input type="button" id="postChats" value="Post!"/> <!--post new message btn-->
+    <br>
 </div>
 
+<button id="getChats" class="btn btn-primary">Get Chats</button> <!--when clicked, display all chats from SQL-->
 
-<input type="button" id="postChats" value="Post!" onclick="onLoadConfigPress(document.getElementById('userInput').value)">
-
-
-
-<button id="getChats" class="btn btn-primary">Get Chats</button>
-
-<div id="response"></div>
+<div id="response"></div> <!--place to dsplay all chats-->
 
 
 
@@ -37,21 +32,18 @@
 
         $(document).ready(function () {
 
-            //button that retrieves info from server (displays in console only right now)
-            //    $("#getChats").click(
-            //       function () {
-            //  $.get("@Url.Action("TestJson","Chats")", function
-            //(serverResponse) {
-            //   var jsonTest = JSON.parse(serverResponse);
-            //   console.log(jsonTest); }
-
-            //used to test page functionality before LINQ was used $("#getChats").click(function(){
-            //  $("#response").text(jsonTest.firstName);
-
+           
             //create a button to post a new chat to the server
             $("#postChats").click(
                function () {
-                   $.post("@Url.Action("PostChats","Chats")", function());
+                   var addPost= $("#postChats").val();//save user input
+
+                   //put into sql:
+                   $.post("@Url.Action("PostChats","Chats")", {"Message" : addPost});
+                   PostChats;
+                       
+
+               });
 
 
 
@@ -59,32 +51,35 @@
 
 
 
-                       //Based off of Mel's code.. creates a <p> and appends new chats to the div #response:
-                       $("#getChats").click(
-                           function () {
-                               $.get("@Url.Action("TestJson","Chats")", function (serverResponse) {
-                                   var jsonTest = JSON.parse(serverResponse);
-                                   console.log(jsonTest);
+                   //Based off of Mel's code.. creates a <p> and appends new chats to the div #response:
+            $("#getChats").click(PostChats);
+                
+                
+                
+                function PostChats() {
+                           $.get("@Url.Action("TestJson","Chats")", function (serverResponse) {
+                               var jsonTest = JSON.parse(serverResponse);
+                               //console.log(jsonTest);
 
-                                   var ul = $("<p>", { id: "messageList", "class": "posts" });
-                                   $("#response").append(ul);
+                               var ul = $("<p>", { id: "messageList", "class": "posts" });
+                               $("#response").append(ul);
 
-                                   $.each(jsonTest, function (inx, val) {
-                                       // var myBgClass = ["bg-info","bg-warning"];
-                                       var li = $("<p>", { id: "li" + inx });
-                                       li.text(val.Message);
-                                       li.click(function () { alert("my index is " + inx); });
-                                       ul.append(li); //similar to $("#messageList").append(li), but more
-                                       //efficient b/c it doesn't need to query for the list
-                                       //again.
+                               $.each(jsonTest, function (inx, val) {
+                                   // var myBgClass = ["bg-info","bg-warning"];
+                                   var li = $("<p>", { id: "li" + inx });
+                                   li.text(val.Message);
+                                   li.click(function () { alert("my index is " + inx); });
+                                   ul.append(li); //similar to $("#messageList").append(li), but more
+                                   //efficient b/c it doesn't need to query for the list
+                                   //again.
 
-                                   });
-                               })
-                           }
-                      );
+                               });
+                           })
+                       }
+                  
 
-                   });
-
-               })})
-    </script>}
-
+               });
+    
+        
+    </script>
+    }
